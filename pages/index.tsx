@@ -1,38 +1,93 @@
 import List from "@/components/List";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
+  const [dark, setDark] = useState(false);
+  useEffect(() => {
+    if (dark) {
+      document.body.style.backgroundColor = "#1e293b";
+    } else {
+      document.body.style.backgroundColor = "white";
+    }
+  }, [dark]);
   return (
     <>
-      <nav className=" flex justify-between items-center p-2 shadow-md mb-6 dark:bg-black">
-        <svg
-          className="ml-4 fill-purple-400 w-7 h-7 cursor-pointer"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 576 512"
-        >
-          <path d="M184.1 38.2c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L39 113c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zm0 160c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L39 273c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zM256 96c0-17.7 14.3-32 32-32H512c17.7 0 32 14.3 32 32s-14.3 32-32 32H288c-17.7 0-32-14.3-32-32zm0 160c0-17.7 14.3-32 32-32H512c17.7 0 32 14.3 32 32s-14.3 32-32 32H288c-17.7 0-32-14.3-32-32zM192 416c0-17.7 14.3-32 32-32H512c17.7 0 32 14.3 32 32s-14.3 32-32 32H224c-17.7 0-32-14.3-32-32zM80 464c-26.5 0-48-21.5-48-48s21.5-48 48-48s48 21.5 48 48s-21.5 48-48 48z" />
-        </svg>
-        <h1 className="text-2xl">Todo</h1>
+      <nav
+        className={`${
+          dark && "bg-slate-800"
+        } flex justify-between items-center p-2 shadow-md mb-6`}
+      >
+        <button className=" ml-2" onClick={() => setDark((pre) => !pre)}>
+          {dark ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="white"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              className="transition-all rotate-[360deg]"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              className=" transition-all rotate-180"
+            >
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          )}
+        </button>
+        <h1 className={`${dark && "text-white"} text-2xl`}>Todo</h1>
         <button className=" bg-green-500 hover:bg-green-600 px-3 py-1.5 rounded-md text-white">
           Login
         </button>
       </nav>
-      <main className=" w-[90%] md:w-1/2 xl:w-1/3 mx-auto">
+      <main className="w-[min(90%,500px)] mx-auto">
         <div className="rounded-md p-4 shadow-md border-[1px] border-slate-100">
           <div className="flex flex-col">
             <input
-              className="mx-4 my-1 p-2 bg-slate-100 rounded-md border-[1px]"
+              className={`${
+                dark ? "bg-slate-800 text-white" : "bg-slate-100"
+              } mx-4 my-1 p-2 rounded-md border-[1px]`}
               type="text"
               placeholder="Title"
             />
             <input
-              className="mx-4 my-1 p-2 bg-slate-100 rounded-md border-[1px]"
+              className={`${
+                dark ? "bg-slate-800 text-white" : "bg-slate-100"
+              } mx-4 my-1 p-2 rounded-md border-[1px]`}
               type="text"
               placeholder="Description"
             />
+
             <button
-              className=" bg-purple-500 hover:bg-purple-600 mx-4 my-2 h-10 rounded-md text-white shadow-md"
+              className={`${
+                dark
+                  ? "bg-purple-700 hover:bg-purple-800"
+                  : " bg-purple-500 hover:bg-purple-600"
+              } mx-4 my-2 h-10 rounded-md text-white shadow-md`}
               onClick={() => setLoading((pre) => !pre)}
             >
               {loading ? (
@@ -59,7 +114,9 @@ export default function Home() {
           </div>
         </div>
         <List
-          className=" my-4 p-4 rounded-md shadow-md border-[1px]"
+          className={`${
+            dark && "text-white"
+          } my-4 p-4 rounded-md shadow-md border-[1px]`}
           title="Test"
           desc="some testing"
         />
